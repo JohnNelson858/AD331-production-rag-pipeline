@@ -1,0 +1,9 @@
+.git
+.venv
+.env
+.env.*
+.chroma
+.pytest_cache
+**/__pycache__
+**/*.pyc
+*.zip

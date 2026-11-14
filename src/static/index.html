@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Harbor Cloud · RAG Workbench</title>
+<link rel="stylesheet" href="/static/style.css"><script src="/static/app.js" defer></script>
+</head>
+<body>
+<header class="mast"><div class="shell mastinner"><span class="logo">HC</span><b>Harbor Cloud</b><span class="course">AD 331 / RAG WORKBENCH</span></div></header>
+<main class="shell">
+<section class="hero"><p class="eyebrow">RETRIEVAL WORKBENCH</p><h1>From question to evidence.</h1><p>See what the pipeline finds, what it reranks, and when it turns to the web.</p></section>
+<div class="layout">
+<div class="primary">
+<section class="panel query">
+<form id="query">
+<div class="tools"><label for="question">Ask a question</label><label class="select">Execution <select id="mode"><option value="preview">Offline preview</option><option value="live" disabled>Live providers</option></select></label></div>
+<div class="entry"><input id="question" required maxlength="1000" placeholder="Choose an example or enter a question" autocomplete="off"><button id="submit" type="submit">Run pipeline</button></div>
+<div class="examples"><button type="button" data-case="internal">Internal example</button><button type="button" data-case="followup">Follow-up example</button><button type="button" data-case="web">Web fallback example</button></div>
+<div class="controls"><label><input type="checkbox" id="conversation"> Conversation mode</label><button id="clear" type="button">Clear history</button><span id="turns"></span></div>
+</form>
+<div id="access-box" hidden><label for="access-code">Live access code</label> <input type="password" id="access-code" autocomplete="off" maxlength="128"></div>
+<p id="mode-help" class="muted">Offline preview uses sample traces and makes no provider calls.</p>
+<p id="status" role="status" aria-live="polite">Ready.</p>
+</section>
+<section class="panel output"><h2>Grounded answer</h2><div id="answer" class="muted">Run a question to see its answer and sources.</div>
+<details id="web" hidden><summary>Web search snippets</summary><div id="web-sources"></div></details></section>
+<section class="panel ranking"><h2>Retrieval ranks</h2>
+<details id="stage1-detail"><summary id="stage1-label">Stage 1 · Bi-encoder candidates</summary><div class="scroll"><table><thead><tr><th>Rank</th><th>Passage</th><th>Cosine distance</th></tr></thead><tbody id="stage1"></tbody></table></div></details>
+<details id="stage2-detail" open><summary id="stage2-label">Stage 2 · Cross-encoder rankings</summary><div class="scroll"><table><thead><tr><th>Rerank</th><th>Passage</th><th>Score</th><th>Dense rank</th><th>Shift</th></tr></thead><tbody id="stage2"></tbody></table></div></details>
+</section>
+</div>
+<aside class="panel telemetry" aria-label="Pipeline telemetry"><p class="eyebrow">PIPELINE STATE</p><h2>Decision trace</h2>
+<p id="route" class="badge">AWAITING QUERY</p><dl><dt>Transformed query</dt><dd id="transformed">—</dd><dt>Rewrite status</dt><dd id="rewrite">—</dd></dl>
+<div class="meter-title"><label for="confidence">Internal confidence</label><strong id="score">—</strong></div>
+<div class="scale"><meter id="confidence" min="0" max="1" value="0"></meter><span id="threshold-mark" aria-hidden="true"></span></div>
+<p id="threshold" class="muted">Gate: 0.55</p><p id="trace-note" class="muted">The reranker score determines the source route.</p>
+</aside>
+</div>
+</main>
+<dialog id="citation"><div class="dialog-head"><h2 id="citation-title">Citation</h2><form method="dialog"><button aria-label="Close citation">Close</button></form></div><p id="citation-loc" class="muted"></p><p id="citation-body"></p><a id="citation-link" hidden target="_blank" rel="noopener noreferrer">Open original document ↗</a></dialog>
+</body>
+</html>
